@@ -1,4 +1,5 @@
-import { getPets } from "./database.js"
+import { getPets, getWalkers } from "./database.js"
+
 document.addEventListener(
     "click",  // This is the type of event
     (clickEvent) => {
@@ -29,7 +30,7 @@ document.addEventListener(
                 Destructuring in JavaScript:
                     https://www.youtube.com/watch?v=UgEaJBz3bjY
             */
-            const [,petId] = itemClicked.id.split("--")
+            const [, petId] = itemClicked.id.split("--")
 
             /*
                 Now that you have the primary key of a pet object,
@@ -42,15 +43,19 @@ document.addEventListener(
                     you have. As soon as you find the right one, display
                     the window alert message.
                 */
+                //refactor slightly to instead message which walker is assigned
                 if (pet.id === parseInt(petId)) {
-                    window.alert(`${pet.name} barks at you`)
+                    for (const walker of walkers) {
+                        if( pet.walkerId===walker.id)
+                        window.alert(`${pet.name} is being walked by ${walker.name}`)
+                    }
                 }
             }
         }
     }
 )
 const pets = getPets()
-
+const walkers = getWalkers()
 export const RegisteredPets = () => {
     let petHTML = "<ul>"
 
